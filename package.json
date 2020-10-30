@@ -1,0 +1,26 @@
+{
+  "name": "simple-website",
+  "version": "1.0.0",
+  "description": "simple website running on node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpinotossi/node-simple-website.git"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "author": "cpinotossi@web.de",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cpinotossi/node-simple-website/issues"
+  },
+  "homepage": "https://github.com/cpinotossi/node-simple-website#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1"
+  }
+}
