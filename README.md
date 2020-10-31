@@ -11,3 +11,5 @@ Some of the work/implementation is based on the following resources:
 - [https://jquery-plugins.net/timing-js-navigation-timing-api-measurement-helpers]
 - [https://github.com/addyosmani/timing.js]
 - [https://nicj.net/resourcetiming-in-practice/]
+- [https://api.jquery.com/jQuery.ready/]
+- [https://www.stevesouders.com/blog/2014/08/21/resource-timing-practical-tips/]
