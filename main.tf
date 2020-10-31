@@ -50,7 +50,6 @@ resource "azurerm_app_service" "webtest" {
   app_service_plan_id = azurerm_app_service_plan.webtest.id
 
   app_settings = {
-      #DOCKER_REGISTRY_SERVER_URL = "https://hub.docker.com"
       WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
 

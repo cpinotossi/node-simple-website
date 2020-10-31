@@ -3,11 +3,73 @@
 
 <head>
   <title>Demo</title>
+  <script src="/javascripts/jquery-3.4.1.min.js" type="text/javascript"></script>
 </head>
 
 <body>
-    {{{body}}}
-    <div><a href="/">[home]</div>
+  <div><a href="/">[home]</a></div>
+  {{{body}}}
+  <div>
+    <h2>Navigation Timing API</h2>
+    <h3>Summary</h3>
+    <pre id="navigation-timing-api-summary"></pre>
+    <h3>Details</h3>
+    <pre id="navigation-timing-api-details"></pre>
+    <h3>Legend</h3>
+    <img alt="Navigation Timing API Legend" src="/images/navigation.timing.api.png" />
+    <h2>Resource Timing API</h2>
+    <h3>Summary</h3>
+    <pre id="resource-timing-api-summary"></pre>
+    <h3>Details</h3>
+    <pre id="resource-timing-api-details"></pre>
+    <h3>Legend</h3>
+    <img alt="Resource Timing API Legend" src="/images/resource.timing.api.png" />
+  </div>
+
+
+  <script>
+    jQuery(document).ready(function ($) {
+      $("#navigation-timing-api-summary").append(JSON.stringify(calculateEntrySummary(performance.getEntriesByType('navigation')), undefined, 2));
+      $("#navigation-timing-api-details").append(JSON.stringify(performance.getEntriesByType('navigation'), undefined, 2));
+      $("#resource-timing-api-summary").append(JSON.stringify(calculateEntrySummary(performance.getEntriesByType("resource")), undefined, 2));
+      $("#resource-timing-api-details").append(JSON.stringify(performance.getEntriesByType("resource"), undefined, 2));
+    });
+
+    function calculateNavigationLoadTimes() {
+      let time = performance.getEntriesByType('navigation')[0];
+      console.log(time)
+      let timeSummary = {
+        dns: time.domainLookupEnd - time.domainLookupStart,
+        tcp: time.connectEnd - time.connectStart,
+        tls: (time.secureConnectionStart > 0) ? (time.requestStart - time.secureConnectionStart) : "0",
+        ttfb: time.responseStart - time.startTime,
+        plt: time.responseEnd - time.responseStart
+      };
+      return timeSummary;
+    }
+
+    function calculateEntry(time) {
+      return {
+        dns: time.domainLookupEnd - time.domainLookupStart,
+        tcp: time.connectEnd - time.connectStart,
+        tls: (time.secureConnectionStart > 0) ? (time.requestStart - time.secureConnectionStart) : "0",
+        ttfb: time.responseStart - time.requestStart,
+        plt: time.responseEnd - time.responseStart
+      };
+    }
+
+    function calculateEntrySummary(entryArray) {
+      let entrySummaryArray = [];
+      for (let i = 0; i < entryArray.length; i++) {
+        entrySummaryArray[i] = calculateEntry(entryArray[i])
+      }
+      console.log(entryArray);
+      console.log(entrySummaryArray);
+      return entrySummaryArray;
+    }
+
+  </script>
+  <div><a href="/">[home]</a></div>
 </body>
 
 </html>
