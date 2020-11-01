@@ -50,17 +50,35 @@ resource "azurerm_app_service" "webtest" {
   app_service_plan_id = azurerm_app_service_plan.webtest.id
 
   app_settings = {
-      WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
+    APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.webtest.instrumentation_key
+    APPLICATIONINSIGHTS_CONNECTION_STRING = "instrumnetationkey=${azurerm_application_insights.webtest.connection_string}"
+    WEBSITES_ENABLE_APP_SERVICE_STORAGE = false
   }
 
   site_config {
-    linux_fx_version = "DOCKER|cpinotossi/webtest:v1"
+    linux_fx_version = "DOCKER|cpinotossi/webtest:v1.3"
     always_on        = "true"
   }
 
   identity {
     type = "SystemAssigned"
   }
+}
+
+# App Insight
+resource "azurerm_application_insights" "webtest" {
+  name                = "${var.prefix}-webtest-appinsight"
+  location            = azurerm_resource_group.webtest.location
+  resource_group_name = azurerm_resource_group.webtest.name
+  application_type    = "web"
+}
+
+output "webapp_key" {
+value = "${azurerm_application_insights.webtest.instrumentation_key}"
+}
+
+output "webapp_id" {
+value = "${azurerm_application_insights.webtest.app_id}"
 }
 
 output "default_site_hostname" {
